@@ -1,0 +1,287 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://anss.org/xmlns/impact/0.1"
+           xmlns="http://anss.org/xmlns/impact/0.1"
+           xmlns:bed="http://quakeml.org/xmlns/bed/1.2"
+           elementFormDefault="qualified" 
+           attributeFormDefault="qualified">
+
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en"><![CDATA[
+      ANSS Impact Estimates for use with quakeml 1.2.
+
+      Jeremy Fee <jmfee@usgs.gov>
+      Michelle Guy <mguy@usgs.gov>
+      Mike Hearne <mhearne@usgs.gov>
+      John Patton <jpatton@usgs.gov>
+
+      2014-11-04
+    ]]></xs:documentation>
+  </xs:annotation>
+
+  <!-- include Quakeml BED namespace, so BED types can be reused -->
+  <xs:import namespace="http://quakeml.org/xmlns/bed/1.2" schemaLocation="QuakeML-BED-1.2_jaxb.xsd"/>
+
+
+  <xs:complexType name="ImpactAttachment">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        A file attached to the product containing this Quakeml document.
+
+        path:
+          the path to content within the product.
+        comment:
+          a description of how this attachment is related to the effect or loss.
+        creationInfo:
+          attribution information for attachment.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="path" type="xs:string"/>
+      <xs:element name="comment" type="bed:Comment" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="creationInfo" type="bed:CreationInfo" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EffectProperty">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        Key/Value properties of effect.
+        Keys and values vary by effect type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="key" type="xs:string"/>
+      <xs:element name="value" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="EffectType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        Type of effect caused by the earthquake.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="tsunami"/>
+      <xs:enumeration value="seiche"/>
+      <xs:enumeration value="mine collapse"/>
+      <xs:enumeration value="coal bump"/>
+      <xs:enumeration value="rockburst"/>
+      <xs:enumeration value="sandblows"/>
+      <xs:enumeration value="uplift"/>
+      <xs:enumeration value="subsidence"/>
+      <xs:enumeration value="ground cracking"/>
+      <xs:enumeration value="liquefaction"/>
+      <xs:enumeration value="felt"/>
+      <xs:enumeration value="landslide"/>
+      <xs:enumeration value="fire"/>
+      <xs:enumeration value="volcanic activity"/>
+      <xs:enumeration value="geyser activity"/>
+      <xs:enumeration value="odors"/>
+      <xs:enumeration value="lights"/>
+      <xs:enumeration value="heard"/>
+      <xs:enumeration value="faulting"/>
+      <xs:enumeration value="damage"/>
+      <xs:enumeration value="casualties"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="Effect">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        An occurance triggered by an earthquake.
+
+        type:
+          type of effect
+        location:
+          where the effect occured (a geocode-able string).
+        property:
+          effect specific attributes, such as faulting "vertical offset".
+        comment:
+          description of effect, or
+          url to source or additional information.
+        creationInfo:
+          attribution information for effect.
+        sourceImpactEstimateID:
+          the ImpactEstimate that originally reported this effect.
+        attachment:
+          files attached to the product related to this effect.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="type" type="EffectType"/>
+      <xs:element name="location" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="property" type="EffectProperty" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="comment" type="bed:Comment" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="creationInfo" type="bed:CreationInfo" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sourceImpactEstimateID" type="bed:ResourceReference" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="attachment" type="ImpactAttachment" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:simpleType name="LossType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        Type of loss caused by this earthquake.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="buildings"/>
+      <xs:enumeration value="electricity"/>
+      <xs:enumeration value="water"/>
+      <xs:enumeration value="telecommunications"/>
+      <xs:enumeration value="roads"/>
+      <xs:enumeration value="bridges"/>
+      <xs:enumeration value="railroads"/>
+      <xs:enumeration value="dollars"/>
+      <xs:enumeration value="livestock"/>
+      <xs:enumeration value="people"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="LossExtent">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        The extent of the loss caused by this earthquake.
+
+        The LossExtents
+          "damaged",
+          "destroyed",
+          "damaged or destroyed"
+        Are used for LossTypes
+          "buildings",
+          "electricity",
+          "water",
+          "telecommunications",
+          "roads",
+          "bridges",
+          "railroads".
+
+        The LossExtents
+          "displaced",
+          "missing",
+          "injured",
+          "killed"
+        Are used for LossTypes
+          "people"
+          "livestock".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="damaged"/>
+      <xs:enumeration value="destroyed"/>
+      <xs:enumeration value="damaged or destroyed"/>
+      <xs:enumeration value="displaced"/>
+      <xs:enumeration value="missing"/>
+      <xs:enumeration value="injured"/>
+      <xs:enumeration value="killed"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LossQualifier">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        Qualitatively describe a loss, or loss value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="few"/>
+      <xs:enumeration value="some"/>
+      <xs:enumeration value="many"/>
+      <xs:enumeration value="nearly"/>
+      <xs:enumeration value="at least"/>
+      <xs:enumeration value="unconfirmed"/>
+      <xs:enumeration value="estimate"/>
+      <xs:enumeration value="exact"/>
+      <xs:enumeration value="range"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="Loss">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        A loss related to a seismic event.
+
+        type:
+          type of loss.
+        value:
+          a value, or
+          a range of values, [value, value + upperUncertainty].
+        units:
+          value units.
+        qualifier:
+          a qualitative value, or
+          description of value.
+        location:
+          where the loss occured (a geocode-able string).
+        cause:
+          secondary effect that caused the loss.
+        extent:
+          extent of loss (damaged/destroyed or injured/killed).
+        comment:
+          description of loss, or
+          url to source or additional information.
+        creationInfo:
+          attribution information for loss.
+        sourceImpactEstimateID:
+          the ImpactEstimate that originally reported this effect.
+        triggeringOriginID:
+          the Origin that describes the cause of this loss.
+        attachment:
+          files attached to the product related to this effect.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="type" type="LossType"/>
+      <xs:element name="value" type="bed:RealQuantity" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="units" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="qualifier" type="LossQualifier" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="location" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="cause" type="EffectType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="extent" type="LossExtent" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="comment" type="bed:Comment" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="creationInfo" type="bed:CreationInfo" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sourceImpactEstimateID" type="bed:ResourceReference" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="triggeringOriginID" type="bed:ResourceReference" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="attachment" type="ImpactAttachment" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="ImpactEstimate">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        An estimate of effects and loss from the earthquake or secondary events.
+
+        effect:
+          effects caused by the earthquake.
+        loss:
+          losses caused by the earthquake or secondary events.
+        comment:
+          description of impact.
+        creationInfo:
+          attribution information for impact estimate.
+        attachment:
+          files attached to the product related to this impact estimate.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="effect" type="Effect" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="loss" type="Loss" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="comment" type="bed:Comment" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="creationInfo" type="bed:CreationInfo" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="attachment" type="ImpactAttachment" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="publicID" use="required" type="bed:ResourceReference"/>
+  </xs:complexType>
+
+
+  <!-- these elements are intended to appear within a Quakeml Event element -->
+  <xs:element name="preferredImpactEstimateID" type="bed:ResourceReference"/>
+  <xs:element name="impactEstimate" type="ImpactEstimate"/>
+
+</xs:schema>

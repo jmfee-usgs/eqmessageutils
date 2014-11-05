@@ -52,6 +52,9 @@ public class Quakeml_1_2_Parser extends NamespacePrefixMapper {
 	public static final String ANSS_EVENT_NAMESPACE = "http://anss.org/xmlns/event/0.1";
 	public static final String ANSS_EVENT_PREFIX = "anss";
 
+	public static final String ANSS_IMPACT_NAMESPACE = "http://anss.org/xmlns/impact/0.1";
+	public static final String ANSS_IMPACT_PREFIX = "impact";
+
 	/** JAXB Context for parsing. */
 	public static final JAXBContext CONTEXT;
 	static {
@@ -207,6 +210,8 @@ public class Quakeml_1_2_Parser extends NamespacePrefixMapper {
 			return ANSS_EVENTID_PREFIX;
 		} else if (ANSS_EVENT_NAMESPACE.equals(namespaceUri)) {
 			return ANSS_EVENT_PREFIX;
+		} else if (ANSS_IMPACT_NAMESPACE.equals(namespaceUri)) {
+			return ANSS_IMPACT_PREFIX;
 		} else {
 			return suggestion;
 		}

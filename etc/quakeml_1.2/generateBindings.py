@@ -40,7 +40,7 @@ complexElements = (
 
 
 
-print """<bindings version="2.0" 
+print """<bindings version="2.1"
 	xmlns="http://java.sun.com/xml/ns/jaxb"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
@@ -105,6 +105,13 @@ print """
 
 	<!-- bindings for AnssEvent -->
 	<bindings schemaLocation="AnssEvent-0.1.xsd" node="/xs:schema">
+		<schemaBindings>
+			<package name="org.quakeml_1_2"/>
+		</schemaBindings>
+	</bindings>
+
+	<!-- bindings for AnssImpact -->
+	<bindings schemaLocation="AnssImpact-0.1.xsd" node="/xs:schema">
 		<schemaBindings>
 			<package name="org.quakeml_1_2"/>
 		</schemaBindings>
