@@ -52,6 +52,7 @@ public class Quakeml_1_2_Parser extends NamespacePrefixMapper {
 	public static final String ANSS_EVENT_NAMESPACE = "http://anss.org/xmlns/event/0.1";
 	public static final String ANSS_EVENT_PREFIX = "anss";
 
+	/** Impact namespace. */
 	public static final String ANSS_IMPACT_NAMESPACE = "http://anss.org/xmlns/impact/0.1";
 	public static final String ANSS_IMPACT_PREFIX = "impact";
 
@@ -69,8 +70,8 @@ public class Quakeml_1_2_Parser extends NamespacePrefixMapper {
 		CONTEXT = context;
 	}
 
-	/** Path to the EQXML schema. */
-	public static String SCHEMA_RESOURCE_PATH = "quakeml_1.2/QuakeML-1.2.xsd";
+	/** Path to schema to use for validation. */
+	public static final String SCHEMA_RESOURCE_PATH = "quakeml_1.2/QuakeML-1.2_validate.xsd";
 
 	/** Only load the schema once. */
 	private static Schema SCHEMA = null;
