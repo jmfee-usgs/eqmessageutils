@@ -85,6 +85,7 @@
       <xs:enumeration value="faulting"/>
       <xs:enumeration value="damage"/>
       <xs:enumeration value="casualties"/>
+      <xs:enumeration value="shaking"/>
     </xs:restriction>
   </xs:simpleType>
 
