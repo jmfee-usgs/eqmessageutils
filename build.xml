@@ -32,9 +32,20 @@
 		<fileset refid="lib.jars" />
 	</path>
 
+
+	<fileset id="lib.runtime" dir="${lib}/jaxb-2.3.0">
+		<include name="jaxb-api.jar"/>
+		<include name="jaxb-core.jar"/>
+		<include name="jaxb-impl.jar"/>
+	</fileset>
+
+	<path id="classpath-runtime">
+		<fileset refid="lib.runtime" />
+	</path>
+
 	<path id="classpath-test">
 		<pathelement location="${lib}/junit-4.7.jar" />
-		<path refid="classpath" />
+		<path refid="classpath-runtime" />
 		<pathelement path="${build}" />
 		<pathelement path="${etc}" />
 	</path>
@@ -102,7 +113,7 @@
 		<mkdir dir="${build}" />
 		<mkdir dir="${lib}" />
 
-		<javac srcdir="${src}" destdir="${build}" source="1.5" target="1.5" includeAntRuntime="no" classpathref="classpath-test" debug="${compile.debug}">
+		<javac srcdir="${src}" destdir="${build}" source="1.8" target="1.8" includeAntRuntime="no" classpathref="classpath-test" debug="${compile.debug}">
 			<src path="${src}"/>
 			<src path="${gensrc}"/>
 		</javac>
@@ -136,7 +147,7 @@
 		</copy>
 
 		<jar jarfile="${jarfile}" basedir="${build}" excludes="**/*Test*">
-			<zipgroupfileset refid="lib.jars" />
+			<zipgroupfileset refid="lib.runtime" />
 		</jar>
 	</target>
 

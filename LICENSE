@@ -28,3 +28,8 @@ The following JARs in the "lib" directory are distributed under the BSD license 
 - jaxb2-basics-tools-0.6.4.jar
 - junit-4.7.jar
 
+The folowing JARs in the "lib/jaxb-2.3.0" directory are distributed under the CDDL 1.1 (https://spdx.org/licenses/CDDL-1.1.html):
+
+- jaxb-api.jar
+- jaxb-core.jar
+- jaxb-impl.jar
